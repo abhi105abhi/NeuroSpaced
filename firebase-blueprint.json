@@ -1,0 +1,37 @@
+{
+  "entities": {
+    "SubtopicStats": {
+      "type": "object",
+      "properties": {
+        "total": { "type": "number" },
+        "correct": { "type": "number" },
+        "lastReviewed": { "type": "number" },
+        "nextReview": { "type": "number" },
+        "interval": { "type": "number" },
+        "easeFactor": { "type": "number" },
+        "subject": { "type": "string" },
+        "topic": { "type": "string" }
+      }
+    },
+    "ProgressData": {
+      "type": "object",
+      "additionalProperties": { "$ref": "#/entities/SubtopicStats" }
+    },
+    "SettingsData": {
+      "type": "object",
+      "properties": {
+        "difficulty": { "type": "string", "enum": ["Easy", "Medium", "Hard"] }
+      }
+    }
+  },
+  "firestore": {
+    "/users/{userId}/data/progress": {
+      "schema": { "$ref": "#/entities/ProgressData" },
+      "description": "Stores the global progress and SRS data for a specific user."
+    },
+    "/users/{userId}/data/settings": {
+      "schema": { "$ref": "#/entities/SettingsData" },
+      "description": "Stores user preferences like difficulty."
+    }
+  }
+}
